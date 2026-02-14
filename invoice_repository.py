@@ -25,24 +25,24 @@ def get_invoices():
             return cursor.fetchall()
 
 
-def get_invoice(user_id:int):
+def get_invoice(invoice_id:int):
     with get_db_conn() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
             SELECT id, amount, description 
             FROM invoices
             WHERE id=%s
-            """,(user_id,)
+            """,(invoice_id,)
             )
             return cursor.fetchone()
 
 
-def delete_invoice(user_id:int):
+def delete_invoice(invoice_id:int):
     with get_db_conn() as conn:
         with conn.cursor() as cursor:
             cursor.execute(
 
             "DELETE FROM invoices WHERE id=%s",
-            (user_id,)
+            (invoice_id,)
 
             )
