@@ -14,3 +14,35 @@ def create_invoice(user_id:int, amount:float,description):
 
             return cursor.fetchone()
 
+
+def get_invoices():
+    with get_db_conn() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT id,user_id, amount, description, created_at FROM invoices ORDER BY id
+            """,)
+
+            return cursor.fetchall()
+
+
+def get_invoice(user_id:int):
+    with get_db_conn() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+            SELECT id, amount, description 
+            FROM invoices
+            WHERE id=%s
+            """,(user_id,)
+            )
+            return cursor.fetchone()
+
+
+def delete_invoice(user_id:int):
+    with get_db_conn() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+
+            "DELETE FROM invoices WHERE id=%s",
+            (user_id,)
+
+            )
