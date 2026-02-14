@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 
 from fastapi import APIRouter
-from models import UserCreate, InvoiceCreate
+from models import InvoiceCreate
 import invoice_repository as repo
 
 router = APIRouter(prefix="/invoice", tags=["invoice"])
@@ -19,10 +19,10 @@ def create_invoice(invoice: InvoiceCreate):
 
 
 @router.get("/{invoice_id}")
-def get_user(invoice_id: int):
+def get_invoice(invoice_id: int):
     result = repo.get_invoice(invoice_id)
     if not result:
-        raise HTTPException(status_code=404, details="invoice not found")
+        raise HTTPException(status_code=404, detail="invoice not found")
 
     return {
         "id" : result[0],
@@ -41,8 +41,9 @@ def get_invoices():
         invoice_list.append(
             {
                 "id": invoice[0],
-                "name": invoice[1],
-                "email": invoice[2]
+                "user_id": invoice[1],
+                "amount": invoice[2],
+                "description": invoice[3]
             }
         )
     return invoice_list

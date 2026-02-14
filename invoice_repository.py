@@ -5,10 +5,10 @@ def create_invoice(user_id:int, amount:float,description):
     with get_db_conn() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-            INSERT INTO invoices user_id, amount, description
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO invoices (user_id, amount, description)
+            VALUES (%s, %s, %s)
             
-            RETURNING id,user_id, amount, description, created_at
+            RETURNING id,user_id, amount, description, create_at
             """,
             (user_id,amount,description))
 
@@ -19,7 +19,7 @@ def get_invoices():
     with get_db_conn() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-            SELECT id,user_id, amount, description, created_at FROM invoices ORDER BY id
+            SELECT id,user_id, amount, description, create_at FROM invoices ORDER BY id
             """,)
 
             return cursor.fetchall()
@@ -29,7 +29,7 @@ def get_invoice(invoice_id:int):
     with get_db_conn() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-            SELECT id, amount, description 
+            SELECT id,user_id, amount, description 
             FROM invoices
             WHERE id=%s
             """,(invoice_id,)
