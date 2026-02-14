@@ -29,7 +29,7 @@ def get_user (user_id: int):
             )
             return cursor.fetchone()
 
-def get_users ( add):
+def get_users ():
     with get_db_conn() as conn:
         with conn.cursor() as cursor:
             cursor.execute(
@@ -50,5 +50,5 @@ def delete_user(user_id: int):
                 (user_id,)
 
             )
-            return cursor.fetchone()
+
 

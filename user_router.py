@@ -1,4 +1,5 @@
-from aiohttp.abc import HTTPException
+from fastapi import HTTPException
+
 from fastapi import APIRouter
 from models import UserCreate
 import user_repository as repo
@@ -45,7 +46,7 @@ def get_users():
         )
     return user_list
 
-@router.delete("/{user_id")
+@router.delete("/{user_id}")
 def delete_user(user_id: int):
     repo.delete_user(user_id)
     return {"response" : "User Deleted Successfully"}
