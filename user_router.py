@@ -33,3 +33,20 @@ def get_user(user_id: int):
 @router.get("/")
 def get_users():
     users = repo.get_users()
+    user_list = []
+
+    for user in users:
+        user_list.append(
+            {
+                "id": user[0],
+                "name": user[1],
+                "email": user[2]
+            }
+        )
+    return user_list
+
+@router.delete("/{user_id")
+def delete_user(user_id: int):
+    repo.delete_user(user_id)
+    return {"response" : "User Deleted Successfully"}
+
